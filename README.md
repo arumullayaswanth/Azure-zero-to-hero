@@ -4,14 +4,13 @@ Learn Azure from the basics to real-world Azure DevOps projects through hands-on
 
 ---
 
-## Day 1: Understanding Cloud Concepts, Vocabulary and Terminology
+## Day 1: Understanding Cloud Concept
 
 * What is Cloud?
 * Difference between Public, Private, and Hybrid Cloud
 * What is Cloud Computing?
 * Cloud Vocabulary
 
-  * Virtualization
   * Virtual Machine
   * API
   * Regions
