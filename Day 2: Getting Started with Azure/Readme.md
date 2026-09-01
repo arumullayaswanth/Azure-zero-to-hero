@@ -65,7 +65,6 @@ That's where we'll start doing the hands-on work in the coming days.
 ---
 
 # 2. Exploring Regions and Availability Zones in Azure
-
 Now let's say you've created your Azure account.
 
 The next thing you'll notice when creating an Azure resource is that Azure often asks you:
