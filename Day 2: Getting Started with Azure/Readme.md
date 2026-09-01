@@ -215,355 +215,76 @@ Azure Region
 └── Availability Zone 3
 ```
 
+## 3. IaaS vs PaaS vs SaaS in Azure
 
-# 3. IaaS vs PaaS vs SaaS in Azure
+Let's say you have a Python application and you want to run it on Azure.
 
-Now let's come to one of the most important concepts in cloud.
-
-You've probably heard:
-
-**IaaS**
-**PaaS**
-**SaaS**
-
-Let's take a real application and see what changes.
-
-## Let's Say You Have a Python Application
-
-Imagine you're a developer.
-
-You've built a Python web application.
-
-The application is ready.
-
-Now you tell me:
-
-> "I need somewhere to run this application."
-
-Okay.
-
-Azure gives you different ways to do that.
-
-### IaaS — Azure Virtual Machine
+### IaaS — Infrastructure as a Service
 
 You can create an **Azure Virtual Machine**.
 
-Let's say you create an Ubuntu VM.
+Azure gives you the server, but you manage the things inside it.
 
-Azure gives you the virtual server.
+For example, you may need to install Python, configure the web server, deploy your application, apply OS updates, and take care of security.
 
-Now it's your job to do a lot of the work.
+So basically:
 
-For example:
+**Azure gives you the server → You manage the server.**
 
-```text
-Create VM
-   ↓
-Install Ubuntu / choose OS
-   ↓
-Configure the server
-   ↓
-Install Python
-   ↓
-Install dependencies
-   ↓
-Configure web server
-   ↓
-Deploy application
-   ↓
-Patch and maintain the OS
-```
-
-Now you're probably thinking:
-
-> "Wait, I have to do all of that?"
-
-Yes.
-
-That's the point.
-
-Azure is taking care of the underlying physical infrastructure, but you're responsible for managing the VM and the software running inside it.
-
-This is **IaaS — Infrastructure as a Service**.
-
-**Azure Virtual Machines are an example of IaaS.**
-
-## Why Would I Use a VM?
-
-Now don't think:
-
-> "IaaS means bad because I have more work."
-
-Not at all.
-
-Sometimes you **want that control**.
-
-For example, imagine you have a legacy application that requires:
-
-* A specific operating system
-* Custom software
-* Special server configuration
-* Full administrator access
-
-In that situation, a VM can make a lot of sense.
-
-You get more control.
-
-But remember:
-
-**More control = More responsibility**
-
-That's the trade-off with IaaS.
+**Example:** Azure Virtual Machines
 
 ---
 
-# PaaS — Azure App Service
+### PaaS — Platform as a Service
 
-Now let's change the requirement.
+Now imagine you don't want to manage the server.
 
-You come back to me and say:
+You just want to say:
 
-> "I don't want to manage the operating system. I don't want to patch servers. I don't want to worry about the underlying infrastructure. I just want to deploy my application."
+> "Here is my application. I want to run it."
 
-Okay.
+You can use **Azure App Service**.
 
-Then why create a VM?
+Azure manages the underlying platform, while you mainly focus on your application.
 
-You could use **Azure App Service**.
+So:
 
-You deploy your application to App Service, and Azure manages much more of the underlying platform for you.
-
-Your focus becomes:
-
-```text
-My Code
-   ↓
-Azure App Service
-   ↓
-Azure manages more of the platform
-```
-
-You're still responsible for your application and its configuration, but you don't have to manage the underlying VM and operating system in the same way you would with IaaS.
-
-That's **PaaS — Platform as a Service**.
-
-**Azure App Service is a common PaaS example.**
-
----
-
-## VM vs App Service
-
-Let's make this very practical.
-
-Imagine we have the exact same Python application.
-
-### With a VM:
-
-You might need to think about:
-
-```text
-Operating System
-Python
-Dependencies
-Web Server
-Security
-Patching
-Application
-```
-
-### With App Service:
-
-Your focus is much more on:
-
-```text
-Application
-Application Configuration
-Deployment
-Data
-```
-
-Azure takes care of much more of the platform underneath.
-
-That's the value of PaaS.
-
-**You spend less time managing servers and more time working on the application.**
-
----
-
-# SaaS — Just Use the Software
-
-Now let's go one step further.
-
-Suppose your company needs email and collaboration tools.
-
-Are you going to:
-
-> "Create a VM, install an email server, configure it, patch it, maintain it, and build a web interface?"
-
-Obviously not.
-
-You just want to **use the software**.
-
-That's where SaaS comes in.
-
-For example, **Microsoft 365** is a SaaS offering.
-
-You sign in and use the software.
-
-You aren't managing the underlying servers or deploying the application yourself.
-
-That's **SaaS — Software as a Service**.
-
----
-
-# So What Is the Real Difference?
-
-Forget the complicated definitions for a moment.
-
-Ask yourself one question:
-
-> **"How much of the infrastructure do I want to manage?"**
-
-### IaaS
-
-You say:
-
-> "Give me the server. I'll manage it."
-
-**Example:** Azure Virtual Machine
-
----
-
-### PaaS
-
-You say:
-
-> "I have the application. You manage more of the platform, and I'll focus on my application."
+**You give Azure the application → Azure manages more of the platform.**
 
 **Example:** Azure App Service
 
 ---
 
-### SaaS
+### SaaS — Software as a Service
 
-You say:
+Now imagine you don't even want to build the application.
 
-> "I don't want to build or manage the application. I just want to use it."
+You just want to use ready-made software.
+
+For example, your company needs email and collaboration tools. You can use **Microsoft 365** instead of building and managing your own system.
+
+So:
+
+**The software is already built → You simply use it.**
 
 **Example:** Microsoft 365
 
 ---
 
-## Think About It Like This
+### The Simple Difference
 
-```text
-             MORE CONTROL
-                  │
-                  ▼
-               IaaS
-          Azure Virtual Machine
-                  │
-                  │
-                  ▼
-               PaaS
-          Azure App Service
-                  │
-                  │
-                  ▼
-               SaaS
-            Microsoft 365
-                  │
-                  ▼
-           LESS MANAGEMENT
-```
+Think about it this way:
 
-As you move from **IaaS → PaaS → SaaS**, more of the underlying infrastructure and platform is managed for you.
+**IaaS:** "Give me a server. I'll manage it."
 
-But remember:
+**PaaS:** "I'll give you my application. You manage the platform."
 
-**SaaS is not automatically better than PaaS, and PaaS is not automatically better than IaaS.**
+**SaaS:** "Just give me the software. I'll use it."
 
-It depends on your requirement.
+The main difference is **how much you have to manage yourself**.
 
----
+**IaaS → More management**
 
-# One Real-World Example
+**PaaS → Less management**
 
-Let's imagine you're working for an e-commerce company.
-
-You have three different requirements.
-
-### Requirement 1 — Legacy Application
-
-You have an old application that needs a specific Windows Server configuration.
-
-You need full control.
-
-**Azure Virtual Machine → IaaS**
-
----
-
-### Requirement 2 — New Web Application
-
-Your developers have built a web application.
-
-They don't want to spend their time patching operating systems.
-
-They just want to deploy the application.
-
-**Azure App Service → PaaS**
-
----
-
-### Requirement 3 — Employee Productivity
-
-Your employees need email, documents, meetings, and collaboration tools.
-
-You don't want to build those applications yourself.
-
-**Microsoft 365 → SaaS**
-
-And here's something important:
-
-**A company can use all three at the same time.**
-
-For example:
-
-```text
-E-Commerce Company
-│
-├── Legacy Application
-│       └── Azure VM → IaaS
-│
-├── Web Application
-│       └── App Service → PaaS
-│
-└── Employee Collaboration
-        └── Microsoft 365 → SaaS
-```
-
-That's how you should think about these models in the real world.
-
----
-
-# Day 2 — What You Should Take Away
-
-By the end of this day, you should not just know the terms.
-
-You should understand the thinking behind them.
-
-When you create something in Azure, ask yourself:
-
-**Where should I deploy it?**
-
-→ That's where **Regions and Availability Zones** come into the picture.
-
-**How much control do I need over the infrastructure?**
-
-→ That's where **IaaS, PaaS, and SaaS** come into the picture.
-
-And as we move through this series, you'll start seeing these concepts again and again.
-
-We're not learning these terms just for interviews.
-
-We're learning them because they are the foundation for the Azure architecture we'll build in the upcoming days.
+**SaaS → Very little infrastructure management**
