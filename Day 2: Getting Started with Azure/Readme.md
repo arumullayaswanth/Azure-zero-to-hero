@@ -62,9 +62,9 @@ Once you've created the account, open the **Azure Portal**.
 
 That's where we'll start doing the hands-on work in the coming days.
 
----
 
 # 2. Exploring Regions and Availability Zones in Azure
+
 Now let's say you've created your Azure account.
 
 The next thing you'll notice when creating an Azure resource is that Azure often asks you:
@@ -77,13 +77,11 @@ At first, you might think:
 
 It actually matters quite a lot.
 
----
-
 ## Azure Regions
 
 An Azure **Region** is a geographical location where Azure has its infrastructure.
 
-For example, Azure has regions in different parts of the world, including India, the United States, Europe, and many other locations. Microsoft maintains a current list of regions and their Availability Zone support.
+For example, Azure has regions in different parts of the world, including India, the United States, and many other locations. Microsoft maintains a current list of regions and their Availability Zone support.
 
 Let's say your company has most of its customers in India.
 
@@ -113,9 +111,7 @@ So don't just open the Azure Portal and randomly select a region.
 
 **Region selection is part of your architecture.**
 
----
-
-## Let's Take a Real Example
+### Let's Take a Real Example
 
 Imagine you're building an e-commerce application for customers in India.
 
@@ -139,9 +135,7 @@ So you would normally start by looking at regions close to your users and then c
 
 That's how an engineer thinks about regions.
 
----
-
-# Availability Zones
+## Availability Zones
 
 Now let's go one step deeper.
 
@@ -170,8 +164,6 @@ Think about it like this:
 ```
 
 The zones are connected with low-latency networking, but they are physically separated to reduce the chance that a local failure affects all of them.
-
----
 
 ## Why Do We Need Availability Zones?
 
@@ -223,15 +215,6 @@ Azure Region
 └── Availability Zone 3
 ```
 
-And one more important point:
-
-**Availability Zones do not protect you from a complete regional outage.**
-
-If you need protection against an entire region becoming unavailable, you need to consider a multi-region architecture and a disaster recovery strategy.
-
-Also, not every Azure service supports Availability Zones in every region, so always check the service's regional support before designing your architecture.
-
----
 
 # 3. IaaS vs PaaS vs SaaS in Azure
 
@@ -243,11 +226,7 @@ You've probably heard:
 **PaaS**
 **SaaS**
 
-Don't try to memorize the definitions.
-
 Let's take a real application and see what changes.
-
----
 
 ## Let's Say You Have a Python Application
 
@@ -265,11 +244,7 @@ Okay.
 
 Azure gives you different ways to do that.
 
-Let's start with the most hands-on option.
-
----
-
-# IaaS — Azure Virtual Machine
+### IaaS — Azure Virtual Machine
 
 You can create an **Azure Virtual Machine**.
 
@@ -312,8 +287,6 @@ Azure is taking care of the underlying physical infrastructure, but you're respo
 This is **IaaS — Infrastructure as a Service**.
 
 **Azure Virtual Machines are an example of IaaS.**
-
----
 
 ## Why Would I Use a VM?
 
