@@ -4,6 +4,33 @@ Learn Azure from the basics to real-world Azure DevOps projects through hands-on
 
 ---
 
+## Course Syllabus
+
+1. Understanding Cloud Concepts
+2. Getting Started with Azure
+3. Azure Resources, Resource Groups and Resource Manager
+4. Azure Virtual Machines — Project 1
+5. Azure Networking Services
+6. Advanced Networking Services
+7. Deploying an Application Behind a Firewall on Azure — Project 2
+8. Azure Storage Services
+9. Command Line Interface for Azure
+10. Azure Resource Manager
+11. Azure Identity and Access Management (IAM)
+12. Introduction to Azure DevOps
+13. Azure DevOps — CI Setup — Project 3
+14. Azure DevOps — CD Setup — Project 4
+15. Azure Kubernetes Service (AKS) — Deep Dive
+16. Deploying a Three-Tier E-Commerce Architecture on AKS — Project 5
+17. Azure DevOps Interview Questions
+18. Azure Key Vault
+19. Azure Serverless
+20. Event-Driven Serverless — Project 6
+21. Managing Azure Resources Using Terraform — Project 7
+22. Deploying an 11-Microservices Project to Production — Project 8
+
+---
+
 ## Day 1: Understanding Cloud Concept
 
 * What is Cloud?
@@ -41,7 +68,7 @@ Learn Azure from the basics to real-world Azure DevOps projects through hands-on
 
 ---
 
-## Day 4: Azure Virtual Machines
+## Day 4: Azure Virtual Machines — Project 1
 
 * Virtualization Recap
 * Creating a Virtual Machine in Azure
@@ -73,7 +100,7 @@ Learn Azure from the basics to real-world Azure DevOps projects through hands-on
 
 ---
 
-## Day 7: Deploying an Application Behind a Firewall on Azure — Project 1
+## Day 7: Deploying an Application Behind a Firewall on Azure — Project 2
 
 * Practical Hands-on Project
 * Setting Up the Networking
@@ -84,23 +111,14 @@ Learn Azure from the basics to real-world Azure DevOps projects through hands-on
 
 ---
 
-## Day 8: Azure Interview Questions — Compute and Networking
-
-* Interview Questions on Topics Covered Till Day 6
-* Cloud Computing Concepts
-* Azure Basics
-* Azure Networking
-
----
-
-## Day 9: Azure Storage Services
+## Day 8: Azure Storage Services
 
 * Types of Azure Storage Services
 * Real-World Use Cases
 
 ---
 
-## Day 10: Command Line Interface for Azure
+## Day 9: Command Line Interface for Azure
 
 * Azure CLI Deep Dive
 * Using Azure CLI to Create Resources on Azure
@@ -108,7 +126,7 @@ Learn Azure from the basics to real-world Azure DevOps projects through hands-on
 
 ---
 
-## Day 11: Azure Resource Manager
+## Day 10: Azure Resource Manager
 
 * Azure Resource Manager and Azure Templates Deep Dive
 * Azure Templates vs Bicep
@@ -117,7 +135,7 @@ Learn Azure from the basics to real-world Azure DevOps projects through hands-on
 
 ---
 
-## Day 12: Azure Identity and Access Management (IAM)
+## Day 11: Azure Identity and Access Management (IAM)
 
 * Authentication Services in Azure
 * Identity and Access Management (IAM)
@@ -126,7 +144,7 @@ Learn Azure from the basics to real-world Azure DevOps projects through hands-on
 
 ---
 
-## Day 13: Introduction to Azure DevOps
+## Day 12: Introduction to Azure DevOps
 
 * Overview of Azure DevOps
 * Introduction to Azure DevOps Services
@@ -134,7 +152,7 @@ Learn Azure from the basics to real-world Azure DevOps projects through hands-on
 
 ---
 
-## Day 14: Azure DevOps — CI Setup — Project 2
+## Day 13: Azure DevOps — CI Setup — Project 3
 
 * Implementing Continuous Integration (CI)
 * Front-End Web App in Python for Voting Between Two Options
@@ -145,7 +163,7 @@ Learn Azure from the basics to real-world Azure DevOps projects through hands-on
 
 ---
 
-## Day 15: Azure DevOps — CD Setup — Project 3
+## Day 14: Azure DevOps — CD Setup — Project 4
 
 * Implementing Continuous Deployment (CD)
 * Using AKS for CD
@@ -156,14 +174,14 @@ Learn Azure from the basics to real-world Azure DevOps projects through hands-on
 
 ---
 
-## Day 16: Azure Kubernetes Service (AKS) — Deep Dive
+## Day 15: Azure Kubernetes Service (AKS) — Deep Dive
 
 * AKS Deep Dive
 * AKS vs Self-Managed Kubernetes Clusters
 
 ---
 
-## Day 17: Deploying a Three-Tier E-Commerce Architecture on AKS — Project 4
+## Day 16: Deploying a Three-Tier E-Commerce Architecture on AKS — Project 5
 
 * Understanding Three-Tier Architecture
 * How Different Services Connect in a Three-Tier Architecture
@@ -174,21 +192,14 @@ Learn Azure from the basics to real-world Azure DevOps projects through hands-on
 
 ---
 
-## Day 18: Azure DevOps Interview Questions
+## Day 17: Azure DevOps Interview Questions
 
 * Beginner-Level Azure DevOps Interview Q&A
 * Advanced-Level Azure DevOps Interview Q&A
 
 ---
 
-## Day 19: Azure Monitor and Monitoring Services
-
-* Monitoring Overview
-* Setting Up Monitoring in Azure
-
----
-
-## Day 20: Azure Key Vault
+## Day 18: Azure Key Vault
 
 * Secrets Management with Key Vault
 * Security Best Practices
@@ -196,20 +207,20 @@ Learn Azure from the basics to real-world Azure DevOps projects through hands-on
 
 ---
 
-## Day 21: Azure Serverless
+## Day 19: Azure Serverless
 
 * Understanding Azure Serverless Services
 * Going Serverless with Azure
 
 ---
 
-## Day 22: Event-Driven Serverless — Project 5
+## Day 20: Event-Driven Serverless — Project 6
 
 * Creating Azure Functions Triggered by Azure Blob Creation
 
 ---
 
-## Day 23: Managing Azure Resources Using Terraform — Project 7
+## Day 21: Managing Azure Resources Using Terraform — Project 7
 
 * Connecting Azure with Terraform
 * Creating Azure Resources with Terraform
@@ -218,18 +229,16 @@ Learn Azure from the basics to real-world Azure DevOps projects through hands-on
 
 ---
 
-## Day 24: Azure DevOps Resume Preparation for Freshers and Experienced Professionals
+## Day 22: Deploying an 11-Microservices Project to Production — Project 8
 
-* Creating an Impressive Azure DevOps Resume
-* Adding Projects to Your Resume
-
----
-
-## Day 25: Azure Interview Preparation
-
-* Review of Key Concepts
-* Interview Questions
-* Practice Sessions
+* Overview of the 11-Microservices Architecture
+* Containerizing Each Microservice with Docker
+* Setting Up the Production AKS Cluster
+* Configuring Networking, Ingress, and Service Discovery
+* Managing Secrets and Configuration
+* Setting Up CI/CD Pipelines for All Services
+* Deploying the Microservices to Production
+* Monitoring, Scaling, and Troubleshooting in Production
 
 ---
 
