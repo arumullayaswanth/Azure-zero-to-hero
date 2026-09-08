@@ -4,6 +4,20 @@ Learn Azure from the basics to real-world Azure DevOps projects through hands-on
 
 ---
 
+## Prerequisites
+
+- Git installed on your machine
+
+### Basic Knowledge 
+
+- **Linux** — basic commands and navigation
+- **Docker** — images, containers, Dockerfile basics
+- **Kubernetes** — pods, deployments, services, ingress
+- **Jenkins** — CI/CD pipelines and Jenkinsfile basics
+- **Argo CD** — GitOps-based continuous deployment
+
+---
+
 ## Course Syllabus
 
 1. Understanding Cloud Concepts
@@ -22,12 +36,11 @@ Learn Azure from the basics to real-world Azure DevOps projects through hands-on
 14. Azure DevOps — CD Setup — Project 4
 15. Azure Kubernetes Service (AKS) — Deep Dive
 16. Deploying a Three-Tier E-Commerce Architecture on AKS — Project 5
-17. Azure DevOps Interview Questions
-18. Azure Key Vault
-19. Azure Serverless
-20. Event-Driven Serverless — Project 6
-21. Managing Azure Resources Using Terraform — Project 7
-22. Deploying an 11-Microservices Project to Production — Project 8
+17. Azure Key Vault
+18. Azure Serverless
+19. Event-Driven Serverless — Project 6
+20. Managing Azure Resources Using Terraform — Project 7
+21. Deploying an 11-Microservices Project to Production — Project 8
 
 ---
 
@@ -192,14 +205,7 @@ Learn Azure from the basics to real-world Azure DevOps projects through hands-on
 
 ---
 
-## Day 17: Azure DevOps Interview Questions
-
-* Beginner-Level Azure DevOps Interview Q&A
-* Advanced-Level Azure DevOps Interview Q&A
-
----
-
-## Day 18: Azure Key Vault
+## Day 17: Azure Key Vault
 
 * Secrets Management with Key Vault
 * Security Best Practices
@@ -207,20 +213,20 @@ Learn Azure from the basics to real-world Azure DevOps projects through hands-on
 
 ---
 
-## Day 19: Azure Serverless
+## Day 18: Azure Serverless
 
 * Understanding Azure Serverless Services
 * Going Serverless with Azure
 
 ---
 
-## Day 20: Event-Driven Serverless — Project 6
+## Day 19: Event-Driven Serverless — Project 6
 
 * Creating Azure Functions Triggered by Azure Blob Creation
 
 ---
 
-## Day 21: Managing Azure Resources Using Terraform — Project 7
+## Day 20: Managing Azure Resources Using Terraform — Project 7
 
 * Connecting Azure with Terraform
 * Creating Azure Resources with Terraform
@@ -229,7 +235,7 @@ Learn Azure from the basics to real-world Azure DevOps projects through hands-on
 
 ---
 
-## Day 22: Deploying an 11-Microservices Project to Production — Project 8
+## Day 21: Deploying an 11-Microservices Project to Production — Project 8
 
 * Overview of the 11-Microservices Architecture
 * Containerizing Each Microservice with Docker

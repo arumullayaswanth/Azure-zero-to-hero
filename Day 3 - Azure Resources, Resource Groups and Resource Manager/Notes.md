@@ -1,153 +1,72 @@
-# Day 3: Azure Resources, Resource Groups and Resource Manager
+# Day 3: Notes — Real Use Cases
 
-Today, let's understand three things you'll work with almost every time you use Azure:
-
-* Azure Resources
-* Resource Groups
-* Azure Resource Manager
-
-Don't worry, these are actually pretty simple once you see how they fit together.
+Short real-world use cases for Resources, Resource Groups, and ARM.
 
 ---
 
-## 1. Resources in Azure
+## Use Case 1: Group by Environment
 
-Let's say you are building an application on Azure.
-
-You might need a Virtual Machine, a Storage Account, a Virtual Network, and a Database.
-
-Each of these is called an **Azure Resource**.
-
-So, simply:
-
-**Anything you create and manage in Azure is generally a resource.**
-
-For example:
+Keep Dev, Test, and Prod separate:
 
 ```text
-Virtual Machine     → Resource
-Storage Account     → Resource
-Virtual Network     → Resource
-Database            → Resource
+rg-app-dev   → resources for development
+rg-app-test  → resources for testing
+rg-app-prod  → resources for production
 ```
 
-As we move through this series, you'll create many different Azure resources.
+Delete `rg-app-dev` when done testing → all dev resources go with it. Prod stays safe.
 
 ---
 
-## 2. Resource Groups in Azure
+## Use Case 2: Group by Project / Team
 
-Now imagine you are building an e-commerce application.
-
-You have:
-
-* 2 Virtual Machines
-* 1 Database
-* 1 Storage Account
-* 1 Virtual Network
-
-Managing all of these individually can become messy.
-
-So Azure gives you a way to group related resources together.
-
-That's a **Resource Group**.
-
-You could have something like:
+Each team gets its own resource group:
 
 ```text
-E-Commerce Resource Group
-│
-├── Virtual Machine
-├── Virtual Machine
-├── Database
-├── Storage Account
-└── Virtual Network
+rg-team-frontend
+rg-team-backend
+rg-team-data
 ```
 
-Now you have one logical place to manage resources that belong to the same application or environment.
-
-For example, you might create separate resource groups for:
-
-```text
-Development
-Testing
-Production
-```
-
-One important thing to remember:
-
-**A resource can belong to only one resource group at a time.**
-
-And when you delete a resource group, the resources inside that resource group are also deleted.
-
-So be careful when deleting resource groups in a production environment.
+Easy billing and access control per team.
 
 ---
 
-## 3. Overview of Azure Resource Manager
+## Use Case 3: Easy Cleanup
 
-Now you might be wondering:
-
-**"Who actually manages all these Azure resources?"**
-
-This is where **Azure Resource Manager (ARM)** comes in.
-
-ARM is the management layer that Azure uses to create, update, delete, and manage resources.
-
-For example, when you create a Virtual Machine from the Azure Portal, the portal is not directly managing the physical infrastructure.
-
-The request goes through Azure Resource Manager.
-
-```text
-You
- ↓
-Azure Portal / CLI / Terraform
- ↓
-Azure Resource Manager
- ↓
-Azure Resources
-```
-
-And ARM isn't only used when creating resources.
-
-It also helps with things like:
-
-* Access control
-* Resource organization
-* Tags
-* Policies
-* Deployments
-
-So when you hear **Azure Resource Manager**, think:
-
-> **"This is the management layer through which I manage my Azure resources."**
+Built a demo? Put everything in one resource group.
+Delete the group → everything is removed in one click. No leftover resources = no surprise bills.
 
 ---
 
-## The Simple Picture
+## Use Case 4: Cost Tracking with Tags
 
-At this point, keep this picture in your mind:
+Add tags to resources so you know what costs what:
 
 ```text
-Azure
-│
-├── Resource Group
-│   ├── VM
-│   ├── Storage
-│   ├── Database
-│   └── Network
-│
-└── Resource Group
-    ├── VM
-    └── Database
+Environment = Production
+Owner       = payments-team
+CostCenter  = 1024
 ```
 
-**Resource = The actual Azure service you create**
+ARM uses tags for billing reports and organization.
 
-**Resource Group = A logical container for related resources**
+---
 
-**Resource Manager = The management layer used to manage those resources**
+## Use Case 5: Access Control (RBAC)
 
-That's all you need to understand for Day 3.
+Give a team access only to their resource group:
 
-We'll use these concepts constantly as we start creating real Azure infrastructure.
+```text
+Developer → Contributor on rg-team-backend only
+```
+
+They can manage their resources, but not touch production.
+
+---
+
+## Quick Rules to Remember
+
+- A resource belongs to **only one** resource group.
+- Deleting a resource group deletes **everything inside it**.
+- ARM handles create, update, delete, tags, policies, and access.
