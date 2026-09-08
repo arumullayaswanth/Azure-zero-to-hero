@@ -59,6 +59,19 @@ Simple way to remember:
 
 More management ← IaaS ... PaaS ... SaaS → Less management
 
+### Real SaaS Products MNCs Use Daily
+
+- **Microsoft 365** — email, Word, Excel, Teams
+- **Google Workspace** — Gmail, Docs, Drive, Meet
+- **Salesforce** — CRM / sales management
+- **Slack** — team messaging
+- **Zoom** — video meetings
+- **ServiceNow** — IT service management
+- **SAP (SuccessFactors)** — HR and business operations
+- **Zoom / Jira / Confluence** — project and dev collaboration
+
+These are all SaaS — the company just logs in and uses them, no servers to manage.
+
 ---
 
 That's Day 2. Next we start creating real Azure resources.
