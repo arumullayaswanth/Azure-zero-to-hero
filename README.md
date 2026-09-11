@@ -6,8 +6,6 @@ Learn Azure from the basics to real-world Azure DevOps projects through hands-on
 
 ## Prerequisites
 
-- Git installed on your machine
-
 ### Basic Knowledge 
 
 - **Linux** — basic commands and navigation
