@@ -49,7 +49,7 @@ Learn Azure from the basics to real-world Azure DevOps projects through hands-on
 * What is Cloud?
 * Difference between Public, Private, and Hybrid Cloud
 * What is Cloud Computing?
-* Cloud Vocabulary
+* Cloud 
 
   * Virtual Machine
   * API
