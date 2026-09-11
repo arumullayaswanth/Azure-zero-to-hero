@@ -44,6 +44,7 @@ When picking a region, check: service availability, latency, cost, compliance, a
 ---
 
 ## 3. IaaS vs PaaS vs SaaS
+https://medium.com/@yaswanth.arumulla/iaas-vs-paas-vs-saas-who-actually-manages-what-5ca5d8d8b35d
 
 | Model | You manage | Azure manages | Example |
 |-------|-----------|---------------|---------|
