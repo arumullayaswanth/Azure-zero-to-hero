@@ -2,6 +2,7 @@
 
 Short and simple. The basic words you'll see everywhere in Azure.
 
+https://medium.com/@yaswanth.arumulla/before-you-learn-azure-understand-these-cloud-concepts-261ec0994506
 ---
 
 ## What is Cloud?
