@@ -10,6 +10,11 @@ Short and simple. Create and manage Azure resources from the command line.
 - Repeatable — save commands in scripts.
 - Works on Windows, Mac, Linux, and in the browser (Cloud Shell).
 
+> ⚠️ **PowerShell vs Bash:** The commands below are on a **single line** so they work in both.
+> - In **Bash**, the line-continuation character is `\`.
+> - In **PowerShell**, it's a backtick `` ` `` (NOT `\`). If you use `\` in PowerShell you'll get "Missing expression after unary operator '--'".
+> - `$RANDOM` only works in **Bash**. In PowerShell, use a fixed number in the name instead.
+
 ---
 
 ## Step 1: Get Azure CLI
@@ -46,30 +51,44 @@ az group create --name rg-day9-cli --location eastus
 
 ## Step 4: Create a Storage Account
 ```bash
-az storage account create \
-  --name stday9cli$RANDOM \
-  --resource-group rg-day9-cli \
-  --location eastus \
-  --sku Standard_LRS
+az storage account create --name stday9cli12345 --resource-group rg-day9-cli --location eastus --sku Standard_LRS
 ```
 
 ## Step 5: Create a Virtual Machine
+Single line:
 ```bash
-az vm create \
-  --resource-group rg-day9-cli \
-  --name vm-day9 \
-  --image Ubuntu2204 \
-  --size Standard_B1s \
-  --admin-username azureuser \
-  --generate-ssh-keys
+az vm create --resource-group rg-day9-cli --name vm-day9 --image Ubuntu2204 --size Standard_B1s --admin-username azureuser --generate-ssh-keys
 ```
 
-Open port 80:
+Open ports 80 and 22:
 ```bash
-az vm open-port --resource-group rg-day9-cli --name vm-day9 --port 80
+az vm open-port --resource-group rg-day9-cli --name vm-day9 --port 80 --priority 1001
+az vm open-port --resource-group rg-day9-cli --name vm-day9 --port 22 --priority 1002
 ```
 
-## Step 6: List and Inspect
+## Step 6: Connect to the VM (automatic)
+
+**Easiest — `az ssh` auto-connects (finds IP + key for you):**
+```bash
+az ssh vm --resource-group rg-day9-cli --name vm-day9
+```
+First time only, add the extension if prompted:
+```bash
+az extension add --name ssh
+```
+
+**Or connect manually with the public IP:**
+```bash
+az vm show -d --resource-group rg-day9-cli --name vm-day9 --query publicIps -o tsv
+ssh azureuser@<PUBLIC-IP>
+```
+
+**Private VM (no public IP)? Connect through Bastion:**
+```bash
+az network bastion ssh --name <bastion-name> --resource-group rg-day9-cli --target-resource-id <vm-id> --auth-type ssh-key --username azureuser --ssh-key ~/.ssh/id_rsa
+```
+
+## Step 7: List and Inspect
 ```bash
 # list all resource groups
 az group list --output table
@@ -81,7 +100,7 @@ az vm list --output table
 az vm show --resource-group rg-day9-cli --name vm-day9
 ```
 
-## Step 7: Clean up
+## Step 8: Clean up
 ```bash
 az group delete --name rg-day9-cli --yes --no-wait
 ```
