@@ -57,7 +57,11 @@ az storage account create --name stday9cli12345 --resource-group rg-day9-cli --l
 ## Step 5: Create a Virtual Machine
 Single line:
 ```bash
-az vm create --resource-group rg-day9-cli --name vm-day9 --image Ubuntu2204 --size Standard_B1s --admin-username azureuser --generate-ssh-keys
+az vm create --resource-group rg-day9-cli --name vm-day9 --image Ubuntu2204 --size Standard_B1s --admin-username azureuser --generate-ssh-keys --debug
+```
+- Check which VM sizes are actually available to you in that region:
+```bash
+az vm list-skus --location eastus --size Standard_B --output table
 ```
 
 Open ports 80 and 22:
