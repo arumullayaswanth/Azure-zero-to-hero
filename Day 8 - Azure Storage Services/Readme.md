@@ -6,13 +6,13 @@ Short and simple. The main storage types and how to create one.
 
 ## Types of Azure Storage
 
-| Type | What it's for | Example use |
-|------|---------------|-------------|
-| **Blob Storage** | Files/objects (images, videos, backups, logs) | Store app uploads, static website files |
-| **File Storage** | Managed file shares (SMB/NFS) | Shared drive for multiple VMs |
-| **Queue Storage** | Messages between app components | Decouple services, background jobs |
-| **Table Storage** | NoSQL key-value data | Simple structured data, fast lookups |
-| **Disk Storage** | Virtual hard disks for VMs | OS and data disks attached to VMs |
+| Type | What it's for | Example use | AWS Equivalent |
+|------|---------------|-------------|----------------|
+| **Blob Storage** | Files/objects (images, videos, backups, logs) | Store app uploads, static website files | **Amazon S3** |
+| **File Storage** | Managed file shares (SMB/NFS) | Shared drive for multiple VMs | **Amazon EFS / FSx** |
+| **Queue Storage** | Messages between app components | Decouple services, background jobs | **Amazon SQS** |
+| **Table Storage** | NoSQL key-value data | Simple structured data, fast lookups | **Amazon DynamoDB** |
+| **Disk Storage** | Virtual hard disks for VMs | OS and data disks attached to VMs | **Amazon EBS** |
 
 ---
 
