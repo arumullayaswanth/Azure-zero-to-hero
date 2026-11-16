@@ -103,23 +103,36 @@ Virtual Machine (Managed Identity)  → reads the file securely
 
 ## PART 7 — Read the File from the VM (no password!)
 Run these **inside the VM**:
-1. Install Azure CLI:
-   ```bash
-   curl -sL https://aka.ms/InstallAzureCli | sudo bash
-   ```
+1. Install Azure CLI (use the apt/deb installer — the old `InstallAzureCli` script fails on Ubuntu 24.04):
+```bash
+curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+az version
+```
 2. Log in using the VM's managed identity (no password):
-   ```bash
-   az login --identity
-   ```
+```bash
+az login --identity
+```
+
+3. find the exact file name in your container:
+```bash
+az storage blob list --account-name stday11proj123 --container-name files --auth-mode login --query "[].name" -o tsv
+```
 3. Download the file you uploaded earlier:
-   ```bash
-   az storage blob download --account-name stday11proj123 --container-name files --name <your-file-name> --file downloaded-file --auth-mode login
-   ```
+```bash
+az storage blob download --account-name stday11proj123 --container-name files --name <your-file-name> --file downloaded-file --auth-mode login
+```
+- give file name <your-file-name>
+
 4. Check it worked:
-   ```bash
-   ls -l downloaded-file
-   ```
+```bash
+ls -l downloaded-file
+```
    The file downloaded with **zero stored credentials** — only the VM's identity + the RBAC role. ✅
+
+5. read the content:
+```bash
+cat downloaded-file
+```
 
 ---
 
