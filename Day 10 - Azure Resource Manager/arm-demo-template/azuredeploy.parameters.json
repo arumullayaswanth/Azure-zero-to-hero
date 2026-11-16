@@ -1,0 +1,14 @@
+{
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "adminUsername": {
+            "value": "azureuser"
+        },
+        "adminPassword": {
+            "value": "ChangeMe_StrongP@ssw0rd!"
+        },
+        "vmSize": {
+            "value": "Standard_B2ts_v2"
+        }
+    }
+}

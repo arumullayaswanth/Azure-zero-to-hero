@@ -6,6 +6,8 @@ Hands-on project. Deploy a web app on a private VM and expose it safely through 
 
 ## What We Build
 
+![Architecture: Deploying an Application Behind Azure Firewall](images.webp)
+
 ```text
 Internet
    │
