@@ -3,7 +3,7 @@
 Set up **Continuous Integration (CI)** for the **Voting App** using Azure DevOps Pipelines.
 Click-by-click steps, matching the video. ✅
 
-📺 Video: https://www.youtube.com/watch?v=aAjH9wqtx9o
+
 
 **What CI does here:** every time you push code, the pipeline runs 3 stages →
 **Build** the Docker image → **Push** it to Azure Container Registry (ACR) → **Update** the K8s manifest (sets up CD for Day 14).
