@@ -92,6 +92,10 @@ sudo usermod -aG docker azureuser
 sudo systemctl restart docker
 # log out and back in so the docker group applies
 ```
+```bash
+exit
+ssh azureuser@<VM_PUBLIC_IP>
+```
 
 **4.3 Create the Agent Pool in Azure DevOps**
 1. Azure DevOps → **Project settings** → **Agent pools** → **Add pool**.
