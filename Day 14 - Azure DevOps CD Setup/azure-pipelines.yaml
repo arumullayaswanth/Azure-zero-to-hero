@@ -1,0 +1,93 @@
+# Full CI pipeline for the Voting App — all 3 microservices (vote, result, worker)
+# For each service: Build the image -> Push to ACR.
+# Then one Update stage edits the K8s manifests in Git (triggers Argo CD / CD).
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+  - main
+
+resources:
+  - repo: self
+
+variables:
+  dockerRegistryServiceConnection: "<your-service-connection-id>"
+  containerRegistry: "yournameazurecicd.azurecr.io"
+  tag: "$(Build.BuildId)"
+
+pool:
+  name: "azureagent" # self-hosted agent pool
+
+stages:
+  # ================= VOTE (Python) =================
+  - stage: Vote
+    displayName: Vote - Build & Push
+    jobs:
+      - job: BuildPushVote
+        steps:
+          - task: Docker@2
+            displayName: Build & push vote
+            inputs:
+              command: buildAndPush
+              repository: "vote"
+              dockerfile: "$(Build.SourcesDirectory)/vote/Dockerfile"
+              containerRegistry: $(dockerRegistryServiceConnection)
+              tags: |
+                $(tag)
+
+  # ================= RESULT (Node.js) =================
+  - stage: Result
+    displayName: Result - Build & Push
+    jobs:
+      - job: BuildPushResult
+        steps:
+          - task: Docker@2
+            displayName: Build & push result
+            inputs:
+              command: buildAndPush
+              repository: "result"
+              dockerfile: "$(Build.SourcesDirectory)/result/Dockerfile"
+              containerRegistry: $(dockerRegistryServiceConnection)
+              tags: |
+                $(tag)
+
+  # ================= WORKER (.NET) =================
+  - stage: Worker
+    displayName: Worker - Build & Push
+    jobs:
+      - job: BuildPushWorker
+        steps:
+          - task: Docker@2
+            displayName: Build & push worker
+            inputs:
+              command: buildAndPush
+              repository: "worker"
+              dockerfile: "$(Build.SourcesDirectory)/worker/Dockerfile"
+              containerRegistry: $(dockerRegistryServiceConnection)
+              tags: |
+                $(tag)
+
+  # ================= UPDATE K8s MANIFESTS (CD trigger) =================
+  - stage: Update
+    displayName: Update K8s Manifests
+    dependsOn:
+      - Vote
+      - Result
+      - Worker
+    jobs:
+      - job: Update
+        steps:
+          - task: ShellScript@2
+            displayName: Update vote manifest
+            inputs:
+              scriptPath: "scripts/updateK8sManifests.sh"
+              args: "vote vote $(tag)"
+          - task: ShellScript@2
+            displayName: Update result manifest
+            inputs:
+              scriptPath: "scripts/updateK8sManifests.sh"
+              args: "result result $(tag)"
+          - task: ShellScript@2
+            displayName: Update worker manifest
+            inputs:
+              scriptPath: "scripts/updateK8sManifests.sh"
+              args: "worker worker $(tag)"
