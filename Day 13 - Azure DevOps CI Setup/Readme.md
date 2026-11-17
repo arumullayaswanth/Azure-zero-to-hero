@@ -1,7 +1,6 @@
 # Day 13: Azure DevOps — CI Setup — Project 3
 
 Set up **Continuous Integration (CI)** for the **Voting App** using Azure DevOps Pipelines.
-Click-by-click steps, matching the video. ✅
 
 
 
