@@ -31,16 +31,34 @@ We build CI for the **vote** service in this project (same pattern for worker/re
 
 ---
 
-## PART 2 — Create an Azure Container Registry (ACR)
-1. Azure Portal → search `Container registries` → **+ Create**.
+## PART 2 — Create a Resource Group
+1. Azure Portal → search `Resource groups` → **+ Create**.
 2. **Resource group**: `rg-day13-ci`
+3. **Region**: pick one close to you (e.g. `Central India`).
+4. **Review + create** → **Create**.
+
+Or CLI:
+```bash
+az group create --name rg-day13-ci --location centralindia
+```
+
+---
+
+## PART 3 — Create an Azure Container Registry (ACR)
+1. Azure Portal → search `Container registries` → **+ Create**.
+2. **Resource group**: `rg-day13-ci` (the one you just created)
 3. **Registry name**: `yournameazurecicd` (lowercase, unique)
 4. **SKU**: Basic → **Review + create** → **Create**.
 5. Open the registry → **Settings** → **Access keys** → turn **Admin user** ON (note the username/password; used later for the K8s secret).
 
+Or CLI:
+```bash
+az acr create --resource-group rg-day13-ci --name yournameazurecicd --sku Basic
+```
+
 ---
 
-## PART 3 — Create a Self-Hosted Agent (on an Azure VM)
+## PART 4 — Create a Self-Hosted Agent (on an Azure VM)
 > The video uses a **self-hosted agent** because Microsoft-hosted agents need a paid parallelism grant (takes days to approve). A self-hosted agent on a VM works immediately.
 
 ### 3a. Create the VM
@@ -89,14 +107,14 @@ sudo systemctl restart docker
 
 ---
 
-## PART 4 — Create the Service Connection to ACR
+## PART 5 — Create the Service Connection to ACR
 1. Azure DevOps → **Project settings** → **Service connections** → **New service connection**.
 2. Choose **Docker Registry** → **Azure Container Registry**.
 3. Select your subscription + your ACR → name it (e.g. `acr-connection`) → **Save**.
 
 ---
 
-## PART 5 — Create the Pipeline
+## PART 6 — Create the Pipeline
 1. Azure DevOps → **Pipelines** → **Create Pipeline**.
 2. Choose **Azure Repos Git** → select your `voting-app` repo.
 3. Choose **Starter pipeline** → replace all content with the YAML below.
@@ -165,7 +183,7 @@ stages:
 
 ---
 
-## PART 6 — Add the Update Script (for the 3rd stage / CD)
+## PART 7 — Add the Update Script (for the 3rd stage / CD)
 Create `scripts/updateK8sManifests.sh` in the repo:
 ```bash
 #!/bin/bash
@@ -183,14 +201,14 @@ This updates the deployment image tag so Argo CD / AKS picks it up in Day 14.
 
 ---
 
-## PART 7 — Run the Pipeline
+## PART 8 — Run the Pipeline
 1. Click **Save and run**.
 2. The self-hosted agent picks up the job → runs **Build → Push → Update**.
 3. Watch each stage finish green ✅.
 
 ---
 
-## PART 8 — Verify the Image in ACR
+## PART 9 — Verify the Image in ACR
 1. Portal → your ACR → **Services** → **Repositories**.
 2. You should see `votingapp` with a tag = the build number.
 
@@ -201,7 +219,7 @@ az acr repository list --name <yourname>azurecicd --output table
 
 ---
 
-## PART 9 — (Reference) ACR Pull Secret for Kubernetes
+## PART 10 — (Reference) ACR Pull Secret for Kubernetes
 Used later in CD so AKS can pull from your private ACR:
 ```bash
 kubectl create secret docker-registry <secret-name> \
@@ -213,7 +231,7 @@ kubectl create secret docker-registry <secret-name> \
 
 ---
 
-## PART 10 — Clean Up
+## PART 11 — Clean Up
 ```bash
 az group delete --name rg-day13-ci --yes --no-wait
 ```
