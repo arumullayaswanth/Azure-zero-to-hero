@@ -19,9 +19,7 @@ variables:
   tag: "$(Build.BuildId)"
 
 pool:
-  vmImage: "ubuntu-latest" # Microsoft-hosted agent (no VM setup needed)
-  # To use your own self-hosted agent instead, replace the line above with:
-  # name: 'azureagent'
+  name: "azureagent" # your self-hosted agent pool name
 
 stages:
   # -------- Stage 1: Build the Docker image --------
