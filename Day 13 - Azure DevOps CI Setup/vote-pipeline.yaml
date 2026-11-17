@@ -1,5 +1,5 @@
 # Docker CI Pipeline for the Voting App "vote" service
-# Build and push the image to Azure Container Registry, then update the K8s manifest.
+# Build and push the image to Azure Container Registry.
 # Reference: https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
 trigger:
@@ -52,15 +52,3 @@ stages:
               repository: "$(imageRepository)"
               command: "push"
               tags: "$(tag)"
-
-  # -------- Stage 3: Update the Kubernetes manifest (sets up CD) --------
-  - stage: Update
-    displayName: Update K8s Manifest
-    jobs:
-      - job: Update
-        displayName: Update
-        steps:
-          - task: ShellScript@2
-            inputs:
-              scriptPath: "scripts/updateK8sManifests.sh"
-              args: "vote $(imageRepository) $(tag)"

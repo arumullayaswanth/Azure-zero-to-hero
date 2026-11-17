@@ -126,27 +126,21 @@ sudo systemctl restart docker
 
 ---
 
-## STEP 5 — Create the Service Connection (DevOps → ACR)
-1. Azure DevOps → **Project settings** (bottom left) → **Service connections** → **New service connection**.
-2. Choose **Docker Registry** → **Next**.
-3. **Registry type**: select **Azure Container Registry**.
-4. **Authentication Type**: select **Service Principal**.
-5. **Subscription**: pick your Azure subscription (sign in / authorize if prompted).
-6. **Azure container registry**: select your ACR (e.g. `yournameazurecicd`).
-7. **Service Connection Name**: `acr-connection`  ← remember this exact name (used in the pipeline YAML).
-8. **Security**: tick ✅ **Grant access permission to all pipelines**.
-9. Click **Save**.
+## STEP 5 — Create the Pipeline (service connection is auto-created here)
+> Using the **Docker** pipeline template creates the ACR service connection for you —
+> no need for a separate step.
 
-> The name `acr-connection` is what you put in the pipeline as
-> `dockerRegistryServiceConnection: 'acr-connection'`.
-
----
-
-## STEP 6 — Create the Pipeline
-1. Azure DevOps → **Pipelines** → **Create Pipeline**.
-2. Choose **Azure Repos Git** → select your `voting-app` repo.
-3. Choose **Starter pipeline** → replace all content with the YAML below.
-4. Replace the placeholder values (service connection id, ACR name, pool name).
+1. Azure DevOps → **Pipelines** → **New pipeline**.
+2. **Where is your code?** → choose **Azure Repos Git**.
+3. Select your `my-first-devops-project` repo.
+4. **Configure your pipeline** → choose **Docker — Build and push an image to Azure Container Registry**.
+5. **Select an Azure subscription** → pick yours → **Continue** (sign in if prompted).
+6. On the Docker config screen:
+   - **Container registry**: select your ACR (`yournameazurecicd`) — this auto-creates the service connection.
+   - **Image Name**: `votingapp`
+   - **Dockerfile**: `$(Build.SourcesDirectory)/vote/Dockerfile`  (change `result` → `vote`)
+7. Click **Validate and configure**.
+8. Azure generates a starter YAML. **Replace all of it** with the full 3-stage YAML below, then **Save and run**.
 
 ### `vote-pipeline.yaml`
 ```yaml
@@ -195,46 +189,20 @@ stages:
         repository: '$(imageRepository)'
         command: 'push'
         tags: '$(tag)'
-
-- stage: Update
-  displayName: Update K8s Manifest
-  jobs:
-  - job: Update
-    steps:
-    - task: ShellScript@2
-      inputs:
-        scriptPath: 'scripts/updateK8sManifests.sh'
-        args: 'vote $(imageRepository) $(tag)'
 ```
+
+> This pipeline has 2 stages: **Build** and **Push**. (The K8s manifest "Update" stage is added later in Day 14 for CD.)
 
 ---
 
-## STEP 7 — Add the Update Script (3rd stage / CD)
-Create `scripts/updateK8sManifests.sh` in the repo:
-```bash
-#!/bin/bash
-set -x
-REPO_URL="https://<ACCESS-TOKEN>@dev.azure.com/<ORG>/voting-app/_git/voting-app"
-git clone "$REPO_URL" /tmp/temp_repo
-cd /tmp/temp_repo
-sed -i "s|image:.*|image: <ACR-NAME>.azurecr.io/$2:$3|g" k8s-specifications/$1-deployment.yaml
-git add .
-git commit -m "Update Kubernetes manifest"
-git push
-rm -rf /tmp/temp_repo
-```
-This updates the deployment image tag so Argo CD / AKS picks it up in Day 14.
-
----
-
-## STEP 8 — Run the Pipeline
+## STEP 6 — Run the Pipeline
 1. Click **Save and run**.
-2. The self-hosted agent picks up the job → runs **Build → Push → Update**.
+2. The agent picks up the job → runs **Build → Push**.
 3. Watch each stage finish green ✅.
 
 ---
 
-## STEP 9 — Verify the Image in ACR
+## STEP 7 — Verify the Image in ACR
 1. Portal → your ACR → **Services** → **Repositories**.
 2. You should see `votingapp` with a tag = the build number.
 
@@ -245,7 +213,7 @@ az acr repository list --name <yourname>azurecicd --output table
 
 ---
 
-## STEP 10 — (Reference) ACR Pull Secret for Kubernetes
+## STEP 8 — (Reference) ACR Pull Secret for Kubernetes
 Used later in CD so AKS can pull from your private ACR:
 ```bash
 kubectl create secret docker-registry <secret-name> \
@@ -257,7 +225,7 @@ kubectl create secret docker-registry <secret-name> \
 
 ---
 
-## STEP 11 — Clean Up
+## STEP 9 — Clean Up
 ```bash
 az group delete --name rg-day13-ci --yes --no-wait
 ```
