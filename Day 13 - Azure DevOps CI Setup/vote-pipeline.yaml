@@ -1,5 +1,5 @@
-# Docker CI Pipeline for the Voting App "vote" service
-# Build and push the image to Azure Container Registry.
+# Docker
+# Build and push an image to Azure Container Registry
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
 trigger:
@@ -9,25 +9,24 @@ resources:
   - repo: self
 
 variables:
-  # Service connection created automatically during pipeline setup
   dockerRegistryServiceConnection: "a7b60954-5543-48c3-9783-2e811dc7dd23"
   imageRepository: "myfirstdevopsproject"
   containerRegistry: "yournameazurecicd.azurecr.io"
-  dockerfilePath: "$(Build.SourcesDirectory)/vote/Dockerfile" # point to the vote service
+  dockerfilePath: "$(Build.SourcesDirectory)/vote/Dockerfile"
   tag: "$(Build.BuildId)"
 
 pool:
-  name: "azureagent" # your self-hosted agent pool
+  name: "azureagent"
 
 stages:
   - stage: Build
-    displayName: Build and Push
+    displayName: Build and push stage
     jobs:
       - job: Build
-        displayName: Build and Push
+        displayName: Build
         steps:
           - task: Docker@2
-            displayName: Build and push an image to ACR
+            displayName: Build and push an image to container registry
             inputs:
               command: buildAndPush
               repository: $(imageRepository)
