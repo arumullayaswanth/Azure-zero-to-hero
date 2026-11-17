@@ -112,9 +112,12 @@ sudo systemctl restart docker
    ```
 3. When prompted:
    - **Server URL**: `https://dev.azure.com/<your-org>`
+- Example: if your browser shows https://dev.azure.com/yaswanthreddy/my-first-devops-project,
    - **Auth type**: PAT → paste your token
-   - **Agent pool**: `azureagent`
-   - **Agent name**: press Enter (default)
+   - **Enter agent pool (press enter for default) >**: azureagent
+   - **Enter agent name (press enter for azureagent)**: press Enter 
+   - **Enter work folder (press enter for _work)** : press Enter
+
 4. Start the agent:
    ```bash
    ./run.sh
@@ -124,9 +127,18 @@ sudo systemctl restart docker
 ---
 
 ## STEP 5 — Create the Service Connection (DevOps → ACR)
-1. Azure DevOps → **Project settings** → **Service connections** → **New service connection**.
-2. Choose **Docker Registry** → **Azure Container Registry**.
-3. Select your subscription + your ACR → name it `acr-connection` → **Save**.
+1. Azure DevOps → **Project settings** (bottom left) → **Service connections** → **New service connection**.
+2. Choose **Docker Registry** → **Next**.
+3. **Registry type**: select **Azure Container Registry**.
+4. **Authentication Type**: select **Service Principal**.
+5. **Subscription**: pick your Azure subscription (sign in / authorize if prompted).
+6. **Azure container registry**: select your ACR (e.g. `yournameazurecicd`).
+7. **Service Connection Name**: `acr-connection`  ← remember this exact name (used in the pipeline YAML).
+8. **Security**: tick ✅ **Grant access permission to all pipelines**.
+9. Click **Save**.
+
+> The name `acr-connection` is what you put in the pipeline as
+> `dockerRegistryServiceConnection: 'acr-connection'`.
 
 ---
 
