@@ -5,62 +5,64 @@
 trigger:
   paths:
     include:
-      - vote/*          # only run when the vote service code changes
+      - vote/* # only run when the vote service code changes
 
 resources:
   - repo: self
 
 variables:
   # Service connection ID created during pipeline setup (replace with yours)
-  dockerRegistryServiceConnection: '<your-service-connection-id>'
-  imageRepository: 'votingapp'
-  containerRegistry: '<yourname>azurecicd.azurecr.io'   # replace with your ACR login server
-  dockerfilePath: '$(Build.SourcesDirectory)/vote/Dockerfile'
-  tag: '$(Build.BuildId)'
+  dockerRegistryServiceConnection: "<your-service-connection-id>"
+  imageRepository: "votingapp"
+  containerRegistry: "<yourname>azurecicd.azurecr.io" # replace with your ACR login server
+  dockerfilePath: "$(Build.SourcesDirectory)/vote/Dockerfile"
+  tag: "$(Build.BuildId)"
 
 pool:
-  name: 'azureagent'    # your self-hosted agent pool name
+  vmImage: "ubuntu-latest" # Microsoft-hosted agent (no VM setup needed)
+  # To use your own self-hosted agent instead, replace the line above with:
+  # name: 'azureagent'
 
 stages:
-# -------- Stage 1: Build the Docker image --------
-- stage: Build
-  displayName: Build
-  jobs:
-  - job: Build
+  # -------- Stage 1: Build the Docker image --------
+  - stage: Build
     displayName: Build
-    steps:
-    - task: Docker@2
-      displayName: Build an image
-      inputs:
-        containerRegistry: '$(dockerRegistryServiceConnection)'
-        repository: '$(imageRepository)'
-        command: 'build'
-        Dockerfile: 'vote/Dockerfile'
-        tags: '$(tag)'
+    jobs:
+      - job: Build
+        displayName: Build
+        steps:
+          - task: Docker@2
+            displayName: Build an image
+            inputs:
+              containerRegistry: "$(dockerRegistryServiceConnection)"
+              repository: "$(imageRepository)"
+              command: "build"
+              Dockerfile: "vote/Dockerfile"
+              tags: "$(tag)"
 
-# -------- Stage 2: Push the image to ACR --------
-- stage: Push
-  displayName: Push
-  jobs:
-  - job: Push
+  # -------- Stage 2: Push the image to ACR --------
+  - stage: Push
     displayName: Push
-    steps:
-    - task: Docker@2
-      displayName: Push an image
-      inputs:
-        containerRegistry: '$(dockerRegistryServiceConnection)'
-        repository: '$(imageRepository)'
-        command: 'push'
-        tags: '$(tag)'
+    jobs:
+      - job: Push
+        displayName: Push
+        steps:
+          - task: Docker@2
+            displayName: Push an image
+            inputs:
+              containerRegistry: "$(dockerRegistryServiceConnection)"
+              repository: "$(imageRepository)"
+              command: "push"
+              tags: "$(tag)"
 
-# -------- Stage 3: Update the Kubernetes manifest (sets up CD) --------
-- stage: Update
-  displayName: Update K8s Manifest
-  jobs:
-  - job: Update
-    displayName: Update
-    steps:
-    - task: ShellScript@2
-      inputs:
-        scriptPath: 'scripts/updateK8sManifests.sh'
-        args: 'vote $(imageRepository) $(tag)'
+  # -------- Stage 3: Update the Kubernetes manifest (sets up CD) --------
+  - stage: Update
+    displayName: Update K8s Manifest
+    jobs:
+      - job: Update
+        displayName: Update
+        steps:
+          - task: ShellScript@2
+            inputs:
+              scriptPath: "scripts/updateK8sManifests.sh"
+              args: "vote $(imageRepository) $(tag)"
