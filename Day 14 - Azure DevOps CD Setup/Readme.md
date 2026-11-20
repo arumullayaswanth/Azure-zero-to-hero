@@ -106,7 +106,7 @@ docker ps                  # should work without sudo
    - **Enter agent name (press enter for azureagent)**: press Enter 
    - **Enter work folder (press enter for _work)** : press Enter
 
-4. # Run the agent as a BACKGROUND SERVICE (stays Online after you close SSH + survives reboot)
+4. Run the agent as a BACKGROUND SERVICE (stays Online after you close SSH + survives reboot)
 ```bash
 sudo ./svc.sh install azureuser
 sudo ./svc.sh start
