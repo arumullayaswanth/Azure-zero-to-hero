@@ -9,6 +9,7 @@ trigger:
   paths:
     exclude:
       - k8s-specifications/* # the Update stage pushes here; excluding it prevents an infinite loop
+      - azure-pipelines.yml # saving the pipeline file shouldn't start a run
 
 resources:
   - repo: self
@@ -83,18 +84,24 @@ stages:
     jobs:
       - job: Update
         steps:
-          - task: ShellScript@2
-            displayName: Update vote manifest
-            inputs:
-              scriptPath: "scripts/updateK8sManifests.sh"
-              args: "vote vote $(tag)"
-          - task: ShellScript@2
-            displayName: Update result manifest
-            inputs:
-              scriptPath: "scripts/updateK8sManifests.sh"
-              args: "result result $(tag)"
-          - task: ShellScript@2
-            displayName: Update worker manifest
-            inputs:
-              scriptPath: "scripts/updateK8sManifests.sh"
-              args: "worker worker $(tag)"
+          # GIT_PAT is a secret pipeline variable (PAT with Code: Read & write).
+          # Set it under Pipelines -> your pipeline -> Edit -> Variables.
+          - script: |
+              set -e
+              rm -rf /tmp/manifests
+              git clone "https://$(GIT_PAT)@dev.azure.com/yaswanth0829/yaswanth/_git/yaswanth" /tmp/manifests
+              cd /tmp/manifests
+              for svc in vote result worker; do
+                sed -i "s|image:.*|image: $(containerRegistry)/$svc:$(tag)|" k8s-specifications/$svc-deployment.yaml
+              done
+              git config user.email "pipeline@azure.com"
+              git config user.name "Azure Pipeline"
+              git commit -am "Update image tags to $(tag) [skip ci]"
+              # If main moved while we were working, rebase on the latest main and retry the push.
+              for attempt in 1 2 3 4 5; do
+                git pull --rebase origin main && git push origin main && break
+                echo "Push attempt $attempt failed, retrying..."
+                sleep $((attempt * 3))
+              done
+              rm -rf /tmp/manifests
+            displayName: Update image tags in k8s-specifications

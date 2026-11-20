@@ -216,11 +216,13 @@ Argo CD UI → **+ New App**:
 ## STEP 14 — Add the Update Stage to the CI Pipeline
 This is what links CI to CD: after pushing the image, update the manifest in Git.
 
-1. Add the update script to your repo: **[`scripts/updateK8sManifests.sh`](./scripts/updateK8sManifests.sh)**
-   (edit the PAT, ORG, repo name, and ACR name inside it).
-2. The pipeline file **[`azure-pipelines.yaml`](./azure-pipelines.yaml)** already includes the
-   **Update** stage that runs this script after Build + Push.
-3. Commit both files and the pipeline will now Build → Push → Update Git on every run.
+1. Create a PAT with **Code → Read & write** scope (User settings → Personal access tokens).
+2. In Azure DevOps: **Pipelines → your pipeline → Edit → Variables → New variable**.
+   Name it `GIT_PAT`, paste the PAT, and tick **Keep this value secret**.
+3. The pipeline file **[`azure-pipelines.yaml`](./azure-pipelines.yaml)** already has the
+   **Update** stage. It runs inline, so there is no separate script file to copy.
+4. Set `containerRegistry` in the pipeline to your real ACR login server, then **Save** and **Run**.
+5. Check **Repos → k8s-specifications**: the image lines should now point to your ACR with the build number as the tag.
 
 ## STEP 15 — Push Code → Watch CI + CD End-to-End
 1. Edit the `vote` app → push to `main`.
