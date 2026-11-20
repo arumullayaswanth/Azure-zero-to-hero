@@ -89,23 +89,33 @@ docker ps                  # should work without sudo
 
 **4.4 Create a PAT**: User settings → **Personal access tokens** → scope **Agent Pools (Read & manage)** → copy it.
 
-**4.5 Configure + run the agent (Linux agent!)**
-```bash
-mkdir myagent && cd myagent
-curl -O <linux-agent-download-url>     # from the pool's "New agent → Linux" tab
-tar zxvf vsts-agent-linux-*.tar.gz
-./config.sh
-# Server URL: https://dev.azure.com/<your-org>   (org only, no project)
-# Auth: press Enter for PAT, then paste the PAT
-# Agent pool: azureagent ; name/work: press Enter
+**4.5 Install and Configure the Agent (on the VM)**
+1. In the `azureagent` pool → **New agent** → **Linux** → copy the download commands.
+2. On the VM:
+   ```bash
+   mkdir myagent && cd myagent
+   curl -O <agent-download-url>
+   tar zxvf vsts-agent-linux-*.tar.gz
+   ./config.sh
+   ```
+3. When prompted:
+   - **Server URL**: `https://dev.azure.com/<your-org>`
+- Example: if your browser shows https://dev.azure.com/yaswanthreddy/my-first-devops-project,
+   - **Auth type**: PAT → paste your token
+   - **Enter agent pool (press enter for default) >**: azureagent
+   - **Enter agent name (press enter for azureagent)**: press Enter 
+   - **Enter work folder (press enter for _work)** : press Enter
 
-# Run the agent as a BACKGROUND SERVICE (stays Online after you close SSH + survives reboot)
+4. # Run the agent as a BACKGROUND SERVICE (stays Online after you close SSH + survives reboot)
+```bash
 sudo ./svc.sh install azureuser
 sudo ./svc.sh start
-sudo ./svc.sh status                   # should show "active (running)"
+sudo ./svc.sh status                  
+ # should show "active (running)"
 
 # (Alternative, temporary: ./run.sh  — but it stops when you close the terminal)
 ```
+
 
 ## STEP 5 — Create the Pipeline (build + push to ACR)
 1. **Pipelines → New pipeline → Azure Repos Git →** your repo `my-first-devops-project`.
