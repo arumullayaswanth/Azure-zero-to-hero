@@ -60,7 +60,7 @@ push code → CI: build image → push to ACR → update manifest in Git
 
 ## STEP 2 — Create a Resource Group
 ```bash
-az group create --name rg-day14 --location centralindia
+az group create --name rg-day14 --location eastus
 ```
 
 ## STEP 3 — Create an Azure Container Registry (ACR)
@@ -77,7 +77,7 @@ az acr create --resource-group rg-day14 --name yournameazurecicd --sku Basic
 ```bash
 ssh azureuser@<VM_PUBLIC_IP>
 sudo apt update
-sudo apt install docker.io -y
+sudo apt install docker.io docker-buildx -y   # buildx is needed for the worker Dockerfile (BUILDPLATFORM)
 sudo usermod -aG docker azureuser
 sudo systemctl restart docker
 exit                       # log out/in so the docker group applies
@@ -142,8 +142,28 @@ az acr repository list --name yournameazurecicd --output table
 > Run STEP 7-10, 12, 16 in the terminal; STEP 11 and 13 are in the Argo CD web UI.
 
 ## STEP 7 — Create an AKS Cluster
+
+**7.1 Register the resource providers (one-time per subscription).**
+Without this you get `MissingSubscriptionRegistration` for `Microsoft.ContainerService`.
 ```bash
-az aks create --resource-group rg-day14 --name aks-day14 --node-count 2 --node-vm-size Standard_B2s_v2 --generate-ssh-keys
+az provider register --namespace Microsoft.ContainerService
+az provider register --namespace Microsoft.Compute
+az provider register --namespace Microsoft.Network
+az provider register --namespace Microsoft.OperationalInsights
+
+# wait until this prints "Registered" (takes a few minutes)
+az provider show --namespace Microsoft.ContainerService --query registrationState -o tsv
+```
+
+**7.2 Create the cluster.**
+```bash
+az aks create --resource-group rg-day14 --name aks-day14 --location eastus --node-count 2 --node-vm-size Standard_D2s_v4 --generate-ssh-keys
+```
+> If you get `The VM size ... is not allowed in your subscription`, the error lists the sizes you can use.
+> Pick a small one (2 vCPU, 4 GB+). If you hit a vCPU quota error, use `--node-count 1`.
+```bash
+# (optional) check your regional vCPU usage
+az vm list-usage --location eastus --query "[?contains(name.value,'cores')]" -o table
 ```
 
 ## STEP 8 — Connect to the Cluster

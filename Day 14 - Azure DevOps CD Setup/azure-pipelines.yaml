@@ -1,17 +1,24 @@
-# Full CI pipeline for the Voting App — all 3 microservices (vote, result, worker)
-# For each service: Build the image -> Push to ACR.
-# Then one Update stage edits the K8s manifests in Git (triggers Argo CD / CD).
+# Docker
+# Build and push an image to Azure Container Registry
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
 trigger:
-  - main
+  branches:
+    include:
+      - main
+  paths:
+    exclude:
+      - k8s-specifications/* # the Update stage pushes here; excluding it prevents an infinite loop
 
 resources:
   - repo: self
 
 variables:
-  dockerRegistryServiceConnection: "<your-service-connection-id>"
+  # Container registry service connection established during pipeline creation
+  dockerRegistryServiceConnection: "75d815a9-7c09-49f0-ad2a-961867af1361"
+  imageRepository: "yaswanth"
   containerRegistry: "yournameazurecicd.azurecr.io"
+  dockerfilePath: "$(Build.SourcesDirectory)/result/Dockerfile"
   tag: "$(Build.BuildId)"
 
 pool:

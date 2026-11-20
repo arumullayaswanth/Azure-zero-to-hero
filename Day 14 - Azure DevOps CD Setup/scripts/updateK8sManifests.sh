@@ -12,6 +12,8 @@ cd /tmp/temp_repo
 # Change the image line in the deployment manifest to the new tag
 sed -i "s|image:.*|image: yournameazurecicd.azurecr.io/$2:$3|g" k8s-specifications/$1-deployment.yaml
 
+git config user.email "pipeline@azure.com"
+git config user.name "Azure Pipeline"
 git add .
 git commit -m "Update $1 image tag to $3"
 git push
